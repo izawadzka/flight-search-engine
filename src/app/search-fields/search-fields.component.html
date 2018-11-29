@@ -1,0 +1,21 @@
+<mat-form-field class="city-form-field">
+  <input matInput type="text" placeholder="Departure city" [formControl]="departureCityFormControl" [errorStateMatcher]="matcher">
+  <mat-error *ngIf="departureCityFormControl.hasError('required')">{{errorMessage}}</mat-error>
+  <button mat-button *ngIf="departureCity" matSuffix mat-icon-button aria-label="Clear" (click)="departureCity=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field class="form-field">
+  <input matInput type="text" placeholder="Destination city" 
+[formControl]="destinationCityFormControl" [errorStateMatcher]="matcher">
+<mat-error *ngIf="destinationCityFormControl.hasError('required')">{{errorMessage}}</mat-error>
+  <button mat-button *ngIf="destinationCity" matSuffix mat-icon-button aria-label="Clear" (click)="destinationCity=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field>
+  <input matInput [matDatepicker]="departureDatePicker" placeholder="Departure date" [formControl]="pickedDateFormControl" [min]="minDate">
+  <mat-datepicker-toggle matSuffix [for]="departureDatePicker"></mat-datepicker-toggle>
+  <mat-datepicker #departureDatePicker></mat-datepicker>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)='searchForFlights()'>Search</button>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SearchParameters } from './search-parameters';
-import { Flight } from '../shared/models/flight';
+import { Flight } from '../../shared/models/flight';
 import { Observable, of } from 'rxjs';
 import dateformat = require('dateformat');
 

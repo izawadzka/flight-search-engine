@@ -3,8 +3,8 @@ import {FormControl, Validators, FormGroupDirective, NgForm} from '@angular/form
 import { SearchParameters } from './search-parameters';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { SearchForFlightsService } from './search-for-flights.service';
-import { Flight } from '../shared/models/flight';
-import { ServerResponse } from '../shared/server-response';
+import { Flight } from '../../shared/models/flight';
+import { ServerResponse } from '../../shared/server-response';
 
 
 const REQUIRED_MIN_LENGTH = 2;

@@ -1,8 +1,11 @@
-import { Component} from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 import {FormControl, Validators, FormGroupDirective, NgForm} from '@angular/forms';
 import { SearchParameters } from './search-parameters';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { SearchForFlightsService } from './search-for-flights.service';
+import { Flight } from '../shared/models/flight';
+import { ServerResponse } from '../shared/server-response';
+
 
 const REQUIRED_MIN_LENGTH = 2;
 
@@ -28,17 +31,25 @@ export class SearchFieldsComponent {
   ]);
 
   matcher = new CustomErrorStateMatcher();
+
+  @Output() responseFromServer: EventEmitter<ServerResponse<Flight>> = new EventEmitter();
   
   constructor(private service: SearchForFlightsService) { }
 
 
   searchForFlights(){
     if(!this.destinationCityFormControl.hasError('required') && !this.departureCityFormControl.hasError('required')){
-    this.service.search(<SearchParameters>{
-      departureCity: this.departureCityFormControl.value,
-      destinationCity: this.destinationCityFormControl.value,
-      departureDate: new Date(this.pickedDateFormControl.value)
-    });
+      document.querySelector(".searchButton").setAttribute("disabled", "true");
+      this.service.search(<SearchParameters>{
+        departureCity: this.departureCityFormControl.value,
+        destinationCity: this.destinationCityFormControl.value,
+        departureDate: new Date(this.pickedDateFormControl.value)
+      }).subscribe(
+        res => {
+          document.querySelector(".searchButton").removeAttribute("disabled");
+          this.responseFromServer.emit(new ServerResponse(res)); 
+      }
+    )
   }
   }
 }

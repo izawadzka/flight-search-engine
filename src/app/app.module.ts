@@ -10,14 +10,17 @@ import { SearchFieldsComponent } from './search-fields/search-fields.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';
+import {MatNativeDateModule, MatSortModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { SearchForFlightsService } from './search-fields/search-for-flights.service';
+import { SearchComponent } from './search-component/search.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchFieldsComponent
+    SearchFieldsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,9 @@ import { SearchForFlightsService } from './search-fields/search-for-flights.serv
     MatDatepickerModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [SearchForFlightsService],
   bootstrap: [AppComponent]

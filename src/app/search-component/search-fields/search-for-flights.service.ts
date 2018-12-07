@@ -3,6 +3,7 @@ import { SearchParameters } from './search-parameters';
 import { Flight } from '../../shared/models/flight';
 import { Observable, of } from 'rxjs';
 import dateformat = require('dateformat');
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 
@@ -11,9 +12,16 @@ import dateformat = require('dateformat');
 })
 export class SearchForFlightsService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
   search(parameters: SearchParameters): Observable<Array<Flight>>{
-    //todo
-    return of([]);
+    let params = new HttpParams()
+    .append('departureCity', parameters.departureCity)
+    .append('destinationCity', parameters.destinationCity)
+    .append('departureDate', parameters.departureDate.toString());
+
+    return this.http.get<Array<Flight>>('/api/database/flights', {
+      params: params
+    });
   }
 }

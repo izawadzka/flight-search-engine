@@ -15,6 +15,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { SearchForFlightsService } from './search-component/search-fields/search-for-flights.service';
 import { SearchComponent } from './search-component/search.component';
 import {MatTableModule} from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatTableModule} from '@angular/material/table';
     MatNativeDateModule,
     MatButtonModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    HttpClientModule
   ],
   providers: [SearchForFlightsService],
   bootstrap: [AppComponent]

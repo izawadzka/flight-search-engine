@@ -5,15 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SearchFieldsComponent } from './search-component/search-fields/search-fields.component';
+import { SearchFieldsComponent } from './shared/search-component/search-fields/search-fields.component';
 
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatSortModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
-import { SearchForFlightsService } from './search-component/search-fields/search-for-flights.service';
-import { SearchComponent } from './search-component/search.component';
+import { SearchForFlightsService } from './shared/search-component/search-fields/search-for-flights.service';
+import { SearchComponent } from './shared/search-component/search.component';
 import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 

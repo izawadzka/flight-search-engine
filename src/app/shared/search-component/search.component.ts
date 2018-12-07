@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Flight } from '../shared/models/flight';
-import { ServerResponse } from '../shared/server-response';
+import { Component, ViewChild } from '@angular/core';
+import { Flight } from '../models/flight';
+import { ServerResponse } from '../server-response';
 import {MatSort, MatTableDataSource} from '@angular/material';
-import { Airport } from '../shared/models/airport';
+import { Airport } from '../models/airport';
 
 
 @Component({

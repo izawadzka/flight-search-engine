@@ -9,6 +9,9 @@ const config = {
     port:1433
 };
 
+const FLIGHTS_VIEW_NAME = "vi_flights";
+const PARTIAL_FLIGHTS_VIEW_NAME = "vi_partial_flights";
+
 
 export let DatabaseRouter = Express.Router();
 
@@ -20,16 +23,24 @@ DatabaseRouter.get('/', (req, res)=>{
 
 DatabaseRouter.get('/flights', (req, res)=>{
     const params = req.query;
-    new mssql.ConnectionPool(config).connect()
-    .then(pool=> pool.query `select * from vi_flights where departureCity=${params.departureCity} AND destinationCity=${params.destinationCity}`)
+
+    makeQuery(createSearchFlightsQuery(params, FLIGHTS_VIEW_NAME))
     .then(result => res.send(result.recordset))
     .catch(error => {
-        console.log(error)
         if(error.name == 'RequestError'){
-            new mssql.ConnectionPool(config).connect()
-            .then(pool=> pool.query `select * from vi_partial_flights where departureCity=${params.departureCity} AND destinationCity=${params.destinationCity}`)
+            makeQuery(createSearchFlightsQuery(params, PARTIAL_FLIGHTS_VIEW_NAME))
             .then(result => res.send(result.recordset))
             .catch(error => res.status(502).send())
         }
     })
 })
+
+
+function makeQuery(query: string): Promise<mssql.IResult<any>>{
+    return new mssql.ConnectionPool(config).connect()
+    .then(pool=> pool.request().query(query))
+}
+
+function createSearchFlightsQuery(params: any, viewName: string): string{
+    return  `select * from ${viewName} where departureCity=${params.departureCity} AND destinationCity=${params.destinationCity}`
+}

@@ -12,6 +12,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatSortModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import { SearchForFlightsService } from './shared/search-component/search-fields/search-for-flights.service';
 import { SearchComponent } from './shared/search-component/search.component';
 import {MatTableModule} from '@angular/material/table';
@@ -36,7 +38,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatTableModule,
     MatSortModule,
-    HttpClientModule
+    HttpClientModule,
+    MatMenuModule,
+    MatToolbarModule
   ],
   providers: [SearchForFlightsService],
   bootstrap: [AppComponent]

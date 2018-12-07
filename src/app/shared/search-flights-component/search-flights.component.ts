@@ -7,10 +7,10 @@ import { Airport } from '../models/airport';
 
 @Component({
   selector: 'search-component',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  templateUrl: './search-flights.component.html',
+  styleUrls: ['./search-flights.component.css']
 })
-export class SearchComponent{
+export class SearchFlightsComponent{
   displayedColumns: string[] = ["position", "departureDate", "arrivalDate", "departureAirport", "destinationAirport", "airlineName"];
   dataSource: MatTableDataSource<Flight>;
 

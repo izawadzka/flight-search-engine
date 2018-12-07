@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter} from '@angular/core';
 import {FormControl, Validators, FormGroupDirective, NgForm} from '@angular/forms';
-import { SearchParameters } from './search-parameters';
+import { SearchFlightsParameters } from './search-flights-parameters';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { SearchForFlightsService } from './search-for-flights.service';
 import { Flight } from '../../models/flight';
@@ -11,10 +11,10 @@ const REQUIRED_MIN_LENGTH = 2;
 
 @Component({
   selector: 'search-fields',
-  templateUrl: './search-fields.component.html',
-  styleUrls: ['./search-fields.component.css']
+  templateUrl: './search-flights-fields.component.html',
+  styleUrls: ['./search-flights-fields.component.css']
 })
-export class SearchFieldsComponent {
+export class SearchFlightsFieldsComponent {
   errorMessage = `City has at least ${REQUIRED_MIN_LENGTH} characters`;
 
   pickedDateFormControl = new FormControl(new Date());
@@ -40,7 +40,7 @@ export class SearchFieldsComponent {
   searchForFlights(){
     if(!this.destinationCityFormControl.hasError('required') && !this.departureCityFormControl.hasError('required')){
       document.querySelector(".searchButton").setAttribute("disabled", "true");
-      this.service.search(<SearchParameters>{
+      this.service.search(<SearchFlightsParameters>{
         departureCity: this.departureCityFormControl.value,
         destinationCity: this.destinationCityFormControl.value,
         departureDate: new Date(this.pickedDateFormControl.value)

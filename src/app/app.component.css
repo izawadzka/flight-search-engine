@@ -1,7 +1,10 @@
-.menu{
-
+search-component{
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    display: block;
 }
 
-search-component{
-    max-width: 80%;
+.mat-toolbar-row{
+    justify-content: space-between;
 }

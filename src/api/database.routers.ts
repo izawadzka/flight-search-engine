@@ -17,3 +17,19 @@ DatabaseRouter.get('/', (req, res)=>{
     pool.then(()=>console.log("Success!")).catch((error)=>console.log(error));
     res.send();
 });
+
+DatabaseRouter.get('/flights', (req, res)=>{
+    const params = req.query;
+    new mssql.ConnectionPool(config).connect()
+    .then(pool=> pool.query `select * from vi_flights where departureCity=${params.departureCity} AND destinationCity=${params.destinationCity}`)
+    .then(result => res.send(result.recordset))
+    .catch(error => {
+        console.log(error)
+        if(error.name == 'RequestError'){
+            new mssql.ConnectionPool(config).connect()
+            .then(pool=> pool.query `select * from vi_partial_flights where departureCity=${params.departureCity} AND destinationCity=${params.destinationCity}`)
+            .then(result => res.send(result.recordset))
+            .catch(error => res.status(502).send())
+        }
+    })
+})

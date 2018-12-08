@@ -1,0 +1,5 @@
+<mat-form-field class="airport-name-form-field">
+  <input matInput type="text" placeholder="Airport name" [formControl]="airportNameFormControl" [errorStateMatcher]="matcher">
+  <mat-error *ngIf="airportNameFormControl.hasError('required')">{{errorMessage}}</mat-error>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)='searchForAirport()' class="searchButton">Search</button>

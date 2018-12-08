@@ -18,12 +18,16 @@ import { SearchForFlightsService } from './shared/search-flights-component/searc
 import { SearchFlightsComponent } from './shared/search-flights-component/search-flights.component';
 import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchCityFieldComponent } from './shared/search-city/search-city-field/search-city-field.component';
+import { SearchCityComponent } from './shared/search-city/search-city.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFlightsFieldsComponent,
-    SearchFlightsComponent
+    SearchFlightsComponent,
+    SearchCityFieldComponent,
+    SearchCityComponent
   ],
   imports: [
     BrowserModule,

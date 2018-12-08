@@ -1,10 +1,10 @@
 import { Component, Output, EventEmitter} from '@angular/core';
-import {FormControl, Validators, FormGroupDirective, NgForm} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import { SearchFlightsParameters } from './search-flights-parameters';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { SearchForFlightsService } from './search-for-flights.service';
 import { Flight } from '../../models/flight';
 import { ServerResponse } from '../../server-response';
+import { CustomErrorStateMatcher } from '../../custom-error-state-matcher';
 
 
 const REQUIRED_MIN_LENGTH = 2;
@@ -54,8 +54,4 @@ export class SearchFlightsFieldsComponent {
   }
 }
 
-export class CustomErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return !!(control && control.invalid);
-  }
-}
+

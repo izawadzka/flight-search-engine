@@ -1,2 +1,17 @@
-<search-component></search-component>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>{{title}}</span>
+      <div class="menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>Log in</button>
+            <button mat-menu-item>Sign in</button>
+        </mat-menu>
+    </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<app-main-panel></app-main-panel>
 <router-outlet></router-outlet>

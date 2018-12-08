@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { SearchParameters } from './search-parameters';
-import { Flight } from '../../shared/models/flight';
+import { SearchFlightsParameters } from './search-flights-parameters';
+import { Flight } from '../../models/flight';
 import { Observable, of } from 'rxjs';
-import dateformat = require('dateformat');
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 
@@ -14,7 +13,7 @@ export class SearchForFlightsService {
 
   constructor(private http: HttpClient) { }
 
-  search(parameters: SearchParameters): Observable<Array<Flight>>{
+  search(parameters: SearchFlightsParameters): Observable<Array<Flight>>{
     let params = new HttpParams()
     .append('departureCity', parameters.departureCity)
     .append('destinationCity', parameters.destinationCity)

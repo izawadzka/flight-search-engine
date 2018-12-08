@@ -10,8 +10,7 @@ export class AirportService {
 
   constructor(private http: HttpClient) { }
 
-  search(): Observable<Array<Flight>>{
-    //todo
-    return of([]);
+  search(cityName: string): Observable<Array<Flight>>{
+    return this.http.get<Array<Flight>>(`/api/database/flights/${cityName}`);
   }
 }

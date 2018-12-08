@@ -45,10 +45,9 @@ export class SearchFlightsFieldsComponent {
         destinationCity: this.destinationCityFormControl.value,
         departureDate: new Date(this.pickedDateFormControl.value)
       }).subscribe(
-        res => {
-          document.querySelector(".searchButton").removeAttribute("disabled");
-          this.responseFromServer.emit(new ServerResponse(res)); 
-      }
+        res => this.responseFromServer.emit(new ServerResponse(res)),
+        err => this.responseFromServer.emit(new ServerResponse(null, err)),
+        () => document.querySelector(".searchButton").removeAttribute("disabled")
     )
   }
   }

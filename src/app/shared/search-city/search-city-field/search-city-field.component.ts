@@ -16,7 +16,7 @@ const REQUIRED_MIN_LENGTH = 2;
 export class SearchCityFieldComponent{
   errorMessage = `City has at least ${REQUIRED_MIN_LENGTH} characters`;
   
-  airportNameFormControl = new FormControl('', [
+  cityNameFormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(REQUIRED_MIN_LENGTH),
   ]);
@@ -28,14 +28,14 @@ export class SearchCityFieldComponent{
   constructor(private service: AirportService) { }
 
   searchForAirport(){
-    if(!this.airportNameFormControl.hasError('required')){
-      document.querySelector(".searchButton").setAttribute("disabled", "true");
+    if(!this.cityNameFormControl.hasError('required')){
+      document.getElementById("searchForCityButton").setAttribute("disabled", "true");
 
-      this.service.search().subscribe(
-        res => {
-          document.querySelector(".searchButton").removeAttribute("disabled");
-          this.responseFromServer.emit(new ServerResponse(res)); 
-      })
+      this.service.search(this.cityNameFormControl.value).subscribe(
+        res => this.responseFromServer.emit(new ServerResponse(res)),
+        err => this.responseFromServer.emit(new ServerResponse(null, err)),
+        () => document.getElementById("searchForCityButton").removeAttribute("disabled")
+      )
   }
 }
 }

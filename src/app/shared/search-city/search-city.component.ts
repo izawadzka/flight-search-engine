@@ -5,7 +5,7 @@ import { ServerResponse } from '../server-response';
 import { Airport } from '../models/airport';
 
 @Component({
-  selector: 'app-search-airport',
+  selector: 'search-airport-component',
   templateUrl: './search-city.component.html',
   styleUrls: ['./search-city.component.css']
 })

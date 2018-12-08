@@ -20,6 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchCityFieldComponent } from './shared/search-city/search-city-field/search-city-field.component';
 import { SearchCityComponent } from './shared/search-city/search-city.component';
+import { MainPanelComponent } from './main-panel/main-panel.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SearchCityComponent } from './shared/search-city/search-city.component'
     SearchFlightsFieldsComponent,
     SearchFlightsComponent,
     SearchCityFieldComponent,
-    SearchCityComponent
+    SearchCityComponent,
+    MainPanelComponent
   ],
   imports: [
     BrowserModule,

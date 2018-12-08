@@ -6,7 +6,7 @@ import { Airport } from '../models/airport';
 
 
 @Component({
-  selector: 'search-component',
+  selector: 'search-flights-component',
   templateUrl: './search-flights.component.html',
   styleUrls: ['./search-flights.component.css']
 })

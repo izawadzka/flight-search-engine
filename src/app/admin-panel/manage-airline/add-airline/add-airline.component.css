@@ -1,0 +1,19 @@
+.add-airline-form{
+   width: 250px;
+}
+  
+.wide-form{
+  width: 100%;
+}
+
+.narrow-form{
+  width: 30%;
+}
+
+mat-form-field{
+  margin-bottom: 15px;
+}
+
+#add-airline-button{
+  float: right;
+}

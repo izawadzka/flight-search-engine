@@ -9,6 +9,7 @@ import { SearchForFlightsService } from './shared/search-flights-component/searc
 import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 import { MainPanelModule } from './main-panel/main-panel.module';
+import { AdminPanelModule } from './admin-panel/admin-panel.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MainPanelModule } from './main-panel/main-panel.module';
     MatMenuModule,
     MatToolbarModule,
     SharedModule,
-    MainPanelModule
+    MainPanelModule,
+    AdminPanelModule
   ],
   providers: [SearchForFlightsService],
   bootstrap: [AppComponent]

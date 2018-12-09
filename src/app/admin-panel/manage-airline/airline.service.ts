@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, from} from 'rxjs';
+import { Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Airline } from 'src/app/shared/models/airline';
 import {map} from 'rxjs/operators'
@@ -22,5 +22,9 @@ export class AirlineService {
     .pipe(
       map(resultValue => resultValue > -1 ? newAirline : null)
     )
+  }
+
+  get(): Observable<Array<Airline>>{
+    return this.http.get<Array<Airline>>("/api/database/airlines");
   }
 }

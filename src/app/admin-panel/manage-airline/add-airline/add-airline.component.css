@@ -1,5 +1,6 @@
 .add-airline-form{
    width: 250px;
+   display: flow-root;
 }
   
 .wide-form{

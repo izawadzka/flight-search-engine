@@ -1,0 +1,27 @@
+<form class="add-airline-form">
+  <mat-form-field class="wide-form">
+    <input matInput placeholder="Airline Name" [formControl]="airlineNameFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validNameInfo}}</mat-hint>
+    <mat-error *ngIf="airlineNameFormControl.hasError('required')">
+    {{validNameInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="narrow-form">
+    <input matInput placeholder="Alias" [formControl]="aliasFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validAliasInfo}}</mat-hint>
+    <mat-error *ngIf="aliasFormControl.hasError('required')">
+      {{validAliasInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="wide-form">
+    <input matInput placeholder="Country" [formControl]="countryFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>At least 2 chars, maximum 30</mat-hint>
+    <mat-error *ngIf="countryFormControl.hasError('required')">
+      At least 2 chars, maximum 30
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" id="add-airline-button" (click)="addAirline()">Add</button>
+</form>

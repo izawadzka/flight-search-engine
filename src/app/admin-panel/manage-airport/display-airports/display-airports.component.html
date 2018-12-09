@@ -1,0 +1,7 @@
+<mat-list>
+  <mat-list-item *ngFor="let airport of airports">
+    <h4 mat-line>{{concat(airport.name, airport.city, airport.country, airport.timezone)}}</h4>
+    <p mat-line>{{createGeoDescription(airport.lattitude, airport.longitude, airport.altitude)}}</p>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>

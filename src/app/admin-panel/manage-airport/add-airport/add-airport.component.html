@@ -1,0 +1,59 @@
+<form class="add-airport-form">
+  <mat-form-field class="wide-form">
+    <input matInput placeholder="Airport Name" [formControl]="airportNameFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validWideFormInfo}}</mat-hint>
+    <mat-error *ngIf="airportNameFormControl.hasError('required')">
+    {{validWideFormInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="wide-form">
+    <input matInput placeholder="City" [formControl]="cityFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validWideFormInfo}}</mat-hint>
+    <mat-error *ngIf="cityFormControl.hasError('required')">
+    {{validWideFormInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="wide-form">
+    <input matInput placeholder="Country" [formControl]="countryFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validWideFormInfo}}</mat-hint>
+    <mat-error *ngIf="countryFormControl.hasError('required')">
+    {{validWideFormInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="narrow-form">
+    <input matInput placeholder="Timezone" [formControl]="timezoneFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validTimezoneInfo}}</mat-hint>
+    <mat-error *ngIf="timezoneFormControl.hasError('required')">
+      {{validTimezoneInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="geo-form">
+    <input matInput type="number" placeholder="Lattitude" [formControl]="lattitudeFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validGeoDataInfo}}</mat-hint>
+    <mat-error *ngIf="lattitudeFormControl.hasError('required')">
+      {{validGeoDataInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="geo-form">
+    <input matInput type="number" placeholder="Longitude" [formControl]="longitudeFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validGeoDataInfo}}</mat-hint>
+    <mat-error *ngIf="longitudeFormControl.hasError('required')">
+      {{validGeoDataInfo}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="geo-form">
+    <input matInput type="number" placeholder="Altitude" [formControl]="altitudeFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-hint>{{validGeoDataInfo}}</mat-hint>
+    <mat-error *ngIf="altitudeFormControl.hasError('required')">
+      {{validGeoDataInfo}}
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" id="add-airport-button" (click)="addAirport()">Add</button>
+</form>

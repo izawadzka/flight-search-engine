@@ -1,0 +1,27 @@
+.add-airport-form{
+    width: 250px;
+    display: flow-root;
+ }
+   
+ .wide-form{
+   width: 100%;
+   display: block;
+ }
+ 
+ .narrow-form{
+   width: 55%;
+   display: block;
+ }
+
+ .geo-form{
+   width: 30%;
+   padding-left: 3%;
+ }
+ 
+ mat-form-field{
+   margin-bottom: 15px;
+ }
+ 
+ #add-airline-button{
+   float: right;
+ }

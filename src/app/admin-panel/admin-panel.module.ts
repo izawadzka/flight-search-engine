@@ -6,13 +6,17 @@ import { AddAirlineComponent } from './manage-airline/add-airline/add-airline.co
 import { DisplayAirlinesComponent } from './manage-airline/display-airlines/display-airlines.component';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
+import { ManageAirportComponent } from './manage-airport/manage-airport.component';
+import { AddAirportComponent } from './manage-airport/add-airport/add-airport.component';
 
 @NgModule({
   declarations: [
     AdminPanelComponent,
     ManageAirlineComponent,
     AddAirlineComponent,
-    DisplayAirlinesComponent
+    DisplayAirlinesComponent,
+    ManageAirportComponent,
+    AddAirportComponent
   ],
   imports: [
     SharedModule,

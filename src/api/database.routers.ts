@@ -15,6 +15,7 @@ const PARTIAL_FLIGHTS_VIEW_NAME = "vi_partial_flights";
 const CONNECTION_PROBLEMS_STATUS_CODE = 502;
 
 const ADD_AIRLINE_PROCEDURE = "add_airline";
+const ADD_AIRPORT_PROCEDURE = "add_airport";
 
 
 export let DatabaseRouter = Express.Router();
@@ -75,14 +76,14 @@ DatabaseRouter.post('/airline', (req, res)=>{
 DatabaseRouter.post('/airport', (req, res)=>{
     new mssql.ConnectionPool(config).connect()
     .then(pool => pool.request()
-            .input("name", req.params["name"])
-            .input("city", req.params["city"])
-            .input("country", req.params["country"])
-            .input("timezone", req.params["timezone"])
+            .input("name", req.params["name"].toLowerCase())
+            .input("city", req.params["city"].toLowerCase())
+            .input("country", req.params["country"].toLowerCase())
+            .input("timezone", req.params["timezone"].toLowerCase())
             .input("lattitude", req.params["lattitude"])
-            .input("longitude", req.params["longtitude"])
+            .input("longitude", req.params["longitude"])
             .input("altitude", req.params["altitude"])
-            .execute('add_airport'))
+            .execute(ADD_AIRPORT_PROCEDURE))
             .then(result =>res.send(result.returnValue))
             .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send(error));
 })

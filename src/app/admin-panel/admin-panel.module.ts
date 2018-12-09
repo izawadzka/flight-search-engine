@@ -9,6 +9,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { ManageAirportComponent } from './manage-airport/manage-airport.component';
 import { AddAirportComponent } from './manage-airport/add-airport/add-airport.component';
 import { DisplayAirportsComponent } from './manage-airport/display-airports/display-airports.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,10 @@ import { DisplayAirportsComponent } from './manage-airport/display-airports/disp
   imports: [
     SharedModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    RouterModule.forChild([
+      { path: 'admin', component: AdminPanelComponent }
+    ])
   ],
   exports: [
     AdminPanelComponent

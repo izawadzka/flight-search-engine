@@ -6,12 +6,10 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>Log in</button>
-            <button mat-menu-item>Sign in</button>
+            <button mat-menu-item (click)="manageUser()">{{actionName}}</button>
         </mat-menu>
     </div>
     </mat-toolbar-row>
 </mat-toolbar>
 
-<app-main-panel></app-main-panel>
-<router-outlet></router-outlet>
+<router-outlet ></router-outlet>

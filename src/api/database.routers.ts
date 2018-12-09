@@ -12,6 +12,12 @@ const config = {
 const FLIGHTS_VIEW_NAME = "vi_flights";
 const PARTIAL_FLIGHTS_VIEW_NAME = "vi_partial_flights";
 
+const AIRLINES_VIEW_NAME = "vi_airlines";
+const PARTIAL_AIRLINES_VIEW_NAME = "vi_partial_airlines";
+
+const AIRPORTS_VIEW_NAME = "vi_airports";
+const PARTIAL_AIRPORTS_VIEW_NAME = "vi_partial_airports";
+
 const CONNECTION_PROBLEMS_STATUS_CODE = 502;
 
 const ADD_AIRLINE_PROCEDURE = "add_airline";
@@ -28,6 +34,30 @@ DatabaseRouter.get('/flights', (req, res)=>{
     .catch(error => {
         if(error.name == 'RequestError'){
             makeQuery(createSearchFlightsQuery(params, PARTIAL_FLIGHTS_VIEW_NAME))
+            .then(result => res.send(result.recordset))
+            .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send())
+        }
+    })
+})
+
+DatabaseRouter.get('/airlines', (req, res)=>{
+    makeQuery(createSimpleSelect(AIRLINES_VIEW_NAME))
+    .then(result => res.send(result.recordset))
+    .catch(error => {
+        if(error.name == 'RequestError'){
+            makeQuery(createSimpleSelect(PARTIAL_AIRLINES_VIEW_NAME))
+            .then(result => res.send(result.recordset))
+            .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send())
+        }
+    })
+})
+
+DatabaseRouter.get('/airports', (req, res)=>{
+    makeQuery(createSimpleSelect(AIRPORTS_VIEW_NAME))
+    .then(result => res.send(result.recordset))
+    .catch(error => {
+        if(error.name == 'RequestError'){
+            makeQuery(createSimpleSelect(PARTIAL_AIRPORTS_VIEW_NAME))
             .then(result => res.send(result.recordset))
             .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send())
         }
@@ -119,4 +149,8 @@ function createSearchFlightsQuery(params: any, viewName: string): string{
 
 function createSearchFlightsQueryForSpecificAirport(cityName: string, viewName: string){
     return `select * from ${viewName} where departureCity LIKE '%${cityName}' OR  destinationCity LIKE '%${cityName}'`
+}
+
+function createSimpleSelect(viewNamen: string){
+    return `select * from ${viewNamen}`;
 }

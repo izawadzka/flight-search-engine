@@ -8,6 +8,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import { ManageAirportComponent } from './manage-airport/manage-airport.component';
 import { AddAirportComponent } from './manage-airport/add-airport/add-airport.component';
+import { DisplayAirportsComponent } from './manage-airport/display-airports/display-airports.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AddAirportComponent } from './manage-airport/add-airport/add-airport.co
     AddAirlineComponent,
     DisplayAirlinesComponent,
     ManageAirportComponent,
-    AddAirportComponent
+    AddAirportComponent,
+    DisplayAirportsComponent
   ],
   imports: [
     SharedModule,

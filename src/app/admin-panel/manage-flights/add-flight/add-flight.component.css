@@ -1,0 +1,20 @@
+mat-form-field{
+    display: block;
+}
+
+.add-flight-form{
+    width: 350px;
+    display: flow-root;
+ }
+
+#add-flight-button{
+    float: right;
+}
+
+.wide-form{
+    width: 100%;
+}
+
+.narrow-form{
+    width: 65%;
+}

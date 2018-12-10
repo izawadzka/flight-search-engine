@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
 import { SearchFlightsFieldsComponent } from './search-flights-fields/search-flights-fields.component';
 import { SearchFlightsComponent } from './search-flights.component';
-import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -10,9 +9,7 @@ import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
     SearchFlightsComponent
   ],
   imports: [
-    SharedModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    SharedModule
   ],
   exports:[
     SearchFlightsComponent

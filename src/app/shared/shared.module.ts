@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
-import { MatButtonModule, MatTableModule, MatSortModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatTableModule, MatSortModule, MatIconModule, MatToolbarModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -16,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatSortModule,
     HttpClientModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule
   ]
 })
 export class SharedModule { }

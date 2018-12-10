@@ -26,7 +26,12 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatDividerModule,
     RouterModule.forChild([
-      { path: 'admin', component: AdminPanelComponent }
+      { path: 'admin', component: AdminPanelComponent, 
+      children:[
+        {path: '', redirectTo: 'airlines', pathMatch: 'full'},
+        {path: 'airlines', component: ManageAirlineComponent},
+        {path: 'airports', component: ManageAirportComponent},
+      ]}
     ])
   ],
   exports: [

@@ -10,7 +10,6 @@ import { NgModule } from '@angular/core';
 import { MainPanelModule } from './main-panel/main-panel.module';
 import { AdminPanelModule } from './admin-panel/admin-panel.module';
 import { RouterModule } from '@angular/router';
-import { MainPanelComponent } from './main-panel/main-panel.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { MainPanelComponent } from './main-panel/main-panel.component';
     BrowserModule,
     BrowserAnimationsModule,
     MatMenuModule,
-    MatToolbarModule,
     SharedModule,
     MainPanelModule,
     AdminPanelModule,

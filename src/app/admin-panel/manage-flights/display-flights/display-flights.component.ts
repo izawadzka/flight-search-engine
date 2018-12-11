@@ -27,7 +27,12 @@ export class DisplayFlightsComponent implements OnInit {
   }
 
   deleteFlight(flight : Flight){
-    console.log("You want to delete:")
-    console.log(flight);
+    this.flightsService.delete(flight).subscribe(
+      result => {
+        if(!result) console.log("Failed to delete flight")
+        else console.log("Successfully deleted flight")
+      },
+      err => console.log(err)
+    )
   }
 }

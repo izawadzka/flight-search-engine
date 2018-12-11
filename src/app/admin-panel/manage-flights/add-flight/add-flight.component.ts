@@ -50,7 +50,10 @@ export class AddFlightComponent implements OnInit {
       departureAirport: this.pickedDepartureAirport,
       destinationAirport: this.pickedDestinationAirport
     }).subscribe( //todo: display toast with message
-      res => console.log(res),
+      res => {
+        if(!res) console.log("Flight already exists")
+        else console.log("Successfully added flight")
+      },
       err => console.log(err)
     )
   }

@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { CustomErrorStateMatcher } from 'src/app/shared/custom-error-state-matcher';
 import { FormControl, Validators } from '@angular/forms';
 import { AirlineService } from '../airline.service';
+import { Airline } from 'src/app/shared/models/airline';
 
 const MIN_NAME_OR_COUNTRY_LENGHT = 2;
 const MAX_NAME_OR_COUNTRY_LENGHT = 30;
@@ -43,16 +44,14 @@ export class AddAirlineComponent{
     && !this.aliasFormControl.hasError('required') 
     && !this.countryFormControl.hasError('required')){
       document.getElementById("add-airline-button").setAttribute("disabled", "true");
-      this.airlineService.add(
-        this.airlineNameFormControl.value,
-        this.aliasFormControl.value,
-        this.countryFormControl.value)
-        .subscribe(
+      this.airlineService.add(<Airline>{
+        name:this.airlineNameFormControl.value,
+        alias: this.aliasFormControl.value,
+        country: this.countryFormControl.value
+      }).subscribe(
           res=>{
-            console.log(res);
-            if(res == null){ //todo: display message
-              console.log("Airline already exists");
-            }
+            if(!res) console.log("Airline already exists");
+            else console.log("Successfully added airline")
           },
           err => console.log(err),
           () => document.getElementById("add-airline-button").removeAttribute("disabled")

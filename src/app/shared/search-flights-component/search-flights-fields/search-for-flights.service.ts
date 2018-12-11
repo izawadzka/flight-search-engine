@@ -30,13 +30,29 @@ export class SearchForFlightsService {
   }
 
   add(flight: Flight): Observable<Flight>{
-    return this.http.post<number>("/api/database/flight", flight)
+    const params = new HttpParams()
+    .set("airlineName", flight.airlineName)
+    .set("departureAirportName", flight.departureAirport.name)
+    .set("departureAirportCity", flight.departureAirport.city)
+    .set("departureAirportCountry", flight.departureAirport.country)
+    .set("destinationAirportName", flight.destinationAirport.name)
+    .set("destinationAirportCity", flight.destinationAirport.city)
+    .set("destinationAirportCountry", flight.destinationAirport.country)
+    .set("departureDate", flight.departureDate.toString())
+    .set("arrivalDate", flight.arrivalDate.toString())
+
+    return this.http.post<number>("/api/database/flight", params)
     .pipe(
-      map(resultValue => resultValue > -1 ? flight : null)
+      map(result => result["returnValue"] > -1 ? flight : null)
     )
   }
 
   delete(flight: Flight): Observable<Flight>{
-    return this.http.post<Flight>("/api/database/deleteflight", flight);
+    const params = new HttpParams()
+    .set("flightId", flight.flightId.toString())
+    return this.http.post<Flight>("/api/database/deleteflight", params)
+    .pipe(
+      map(result => result["returnValue"] > -1 ? flight : null)
+    )
   }
 }

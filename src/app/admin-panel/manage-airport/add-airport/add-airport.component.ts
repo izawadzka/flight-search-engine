@@ -75,10 +75,8 @@ export class AddAirportComponent{
         }
       ).subscribe(
         res => {
-          console.log(res);
-          if(res == null){ //todo: display message
-            console.log("Airport already exists");
-          }
+          if(res == null) console.log("Airport already exists")
+          else console.log("Successfully added airport")
         },
         err => console.log(err),
         () => document.getElementById("add-airport-button").removeAttribute("disabled")

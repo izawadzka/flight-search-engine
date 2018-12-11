@@ -22,6 +22,9 @@ const CONNECTION_PROBLEMS_STATUS_CODE = 502;
 
 const ADD_AIRLINE_PROCEDURE = "add_airline";
 const ADD_AIRPORT_PROCEDURE = "add_airport";
+const ADD_USER_PROCEDURE = 'add_user';
+const ADD_FLIGHT_PROCEDURE = "add_flight";
+const DROP_FLIGHT_PROCEDURE = 'drop_flight';
 
 
 export let DatabaseRouter = Express.Router();
@@ -34,6 +37,18 @@ DatabaseRouter.get('/flights', (req, res)=>{
     .catch(error => {
         if(error.name == 'RequestError'){
             makeQuery(createSearchFlightsQuery(params, PARTIAL_FLIGHTS_VIEW_NAME))
+            .then(result => res.send(result.recordset))
+            .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send())
+        }
+    })
+});
+
+DatabaseRouter.get('/allflights', (req, res)=>{
+    makeQuery(createSimpleSelect(FLIGHTS_VIEW_NAME))
+    .then(result => res.send(result.recordset))
+    .catch(error => {
+        if(error.name == 'RequestError'){
+            makeQuery(createSimpleSelect(PARTIAL_FLIGHTS_VIEW_NAME))
             .then(result => res.send(result.recordset))
             .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send())
         }
@@ -69,16 +84,15 @@ DatabaseRouter.post('/user', (req, res)=>{
     .then(pool => pool.request()
             .input("username", req.params["username"])
             .input("password", req.params["password"])
-            .execute('add_user'))
-            .then(result =>res.send(result.returnValue))
+            .execute(ADD_USER_PROCEDURE))
+            .then(result =>res.send(res.send({"returnValue": result.returnValue})))
             .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send(error));
 })
-
 
 DatabaseRouter.get('/flights/:cityName', (req, res)=>{
     const requestedAirportName: string = req.params['cityName'];
 
-   makeQuery(createSearchFlightsQueryForSpecificAirport(requestedAirportName.toLowerCase().toLowerCase(), FLIGHTS_VIEW_NAME))
+   makeQuery(createSearchFlightsQueryForSpecificAirport(requestedAirportName.toUpperCase(), FLIGHTS_VIEW_NAME))
    .then(result => res.send(result.recordset))
     .catch(error => {
         if(error.name == 'RequestError'){
@@ -90,13 +104,14 @@ DatabaseRouter.get('/flights/:cityName', (req, res)=>{
 });
 
 DatabaseRouter.post('/airline', (req, res)=>{
+    console.log(req.body)
     new mssql.ConnectionPool(config).connect()
     .then(pool => pool.request()
-            .input("name", req.params["name"].toLowerCase())
-            .input("alias", req.params["alias"].toLowerCase())
-            .input("country", req.params["country"].toLowerCase())
+            .input("name", req.body["name"].toUpperCase())
+            .input("alias", req.body["alias"].toUpperCase())
+            .input("country", req.body["country"].toUpperCase())
             .execute(ADD_AIRLINE_PROCEDURE))
-            .then(result =>res.send(result.returnValue))
+            .then(result => res.send({"returnValue": result.returnValue})) //verify!
             .catch(error => {
                 console.log(error)
                 res.status(CONNECTION_PROBLEMS_STATUS_CODE).send(error)
@@ -104,38 +119,55 @@ DatabaseRouter.post('/airline', (req, res)=>{
 })
 
 DatabaseRouter.post('/airport', (req, res)=>{
+   console.log(req.body)
     new mssql.ConnectionPool(config).connect()
     .then(pool => pool.request()
-            .input("name", req.params["name"].toLowerCase())
-            .input("city", req.params["city"].toLowerCase())
-            .input("country", req.params["country"].toLowerCase())
-            .input("timezone", req.params["timezone"].toLowerCase())
-            .input("lattitude", req.params["lattitude"])
-            .input("longitude", req.params["longitude"])
-            .input("altitude", req.params["altitude"])
+            .input("name", req.body["name"].toUpperCase())
+            .input("city", req.body["city"].toUpperCase())
+            .input("country", req.body["country"].toUpperCase())
+            .input("timezone", req.body["timezone"].toUpperCase())
+            .input("lattitude", +req.body["lattitude"])
+            .input("longitude", +req.body["longitude"])
+            .input("altitude", +req.body["altitude"])
             .execute(ADD_AIRPORT_PROCEDURE))
-            .then(result =>res.send(result.returnValue))
-            .catch(error => res.status(CONNECTION_PROBLEMS_STATUS_CODE).send(error));
+            .then(result => res.send({"returnValue": result.returnValue})) //verify!
+            .catch(error => {
+                console.log(error);
+                res.status(CONNECTION_PROBLEMS_STATUS_CODE).send(error)
+            });
 })
 
 DatabaseRouter.post('/flight', (req, res)=>{
     new mssql.ConnectionPool(config).connect()
     .then(pool => pool.request()
-            .input("airlineName", req.params["airlineName"])
-            .input("departureAirportName", req.params["departureAirportName"])
-            .input("departureAirportCity", req.params["departureAirportCity"])
-            .input("departureAirportCountry", req.params["departureAirportCountry"])
-            .input("destinationAirportName", req.params["destinationAirportName"])
-            .input("destinationAirportCity", req.params["destinationAirportCity"])
-            .input("destinationAirportCountry", req.params["destinationAirportCountry"])
-            .input("departureDate", req.params["departureDate"])
-            .input("arrivalDate", req.params["arrivalDate"])
-            .execute('add_flight'))
-            .then(result =>res.send(result.returnValue))
+            .input("airlineName", req.body["airlineName"].toUpperCase())
+            .input("departureAirportName", req.params["departureAirportName"].toUpperCase())
+            .input("departureAirportCity", req.body["departureAirportCity"].toUpperCase())
+            .input("departureAirportCountry", req.body["departureAirportCountry"].toUpperCase())
+            .input("destinationAirportName", req.body["destinationAirportName"].toUpperCase())
+            .input("destinationAirportCity", req.body["destinationAirportCity"].toUpperCase())
+            .input("destinationAirportCountry", req.body["destinationAirportCountry"].toUpperCase())
+            .input("departureDate", new Date(req.body["departureDate"]))
+            .input("arrivalDate", new Date(req.body["arrivalDate"]))
+            .execute(ADD_FLIGHT_PROCEDURE))
+            .then(result => res.send({"returnValue": result.returnValue})) //verify!
             .catch(error => {
                 console.log(error)
                 res.status(CONNECTION_PROBLEMS_STATUS_CODE).send(error)
             });
+})
+
+
+DatabaseRouter.post('/deleteflight', (req, res)=>{
+   new mssql.ConnectionPool(config).connect()
+    .then(pool => pool.request()
+            .input("flightId", +req.body["flightId"])
+            .execute(DROP_FLIGHT_PROCEDURE))
+            .then(result => res.send({"returnValue": result.returnValue})) //verify!
+            .catch(error => {
+                console.log(error)
+                res.status(CONNECTION_PROBLEMS_STATUS_CODE).send(error)
+    });
 })
 
 function makeQuery(query: string): Promise<mssql.IResult<any>>{

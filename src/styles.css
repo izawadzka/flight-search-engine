@@ -6,3 +6,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+app-manage-flights, app-manage-airport, app-manage-airline{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+app-manage-flights, app-manage-airport, app-manage-airline > *{
+    margin-top: 20px; 
+}
+
+mat-divider{
+    margin-top: 16px !important;
+    width: 100%;
+}

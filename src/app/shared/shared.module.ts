@@ -4,9 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule, MatTableModule, MatSortModule, MatIconModule, MatToolbarModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { FormatUTCDatePipe } from './pipes/format-utc-date.pipe';
+import { DescribeAirportPipe } from './pipes/describe-airport.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    FormatUTCDatePipe,
+    DescribeAirportPipe
+  ],
   exports: [
     CommonModule,
     FormsModule,
@@ -19,7 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     MatToolbarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FormatUTCDatePipe,
+    DescribeAirportPipe
   ]
 })
 export class SharedModule { }

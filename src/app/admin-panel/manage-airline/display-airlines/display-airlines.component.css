@@ -5,3 +5,8 @@ p {
 .mat-list-base{
   padding-top: 0;
 }
+
+mat-list{
+  width: 100%;
+  padding: 0 35%;
+}

@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { ManageFlightsComponent } from './manage-flights/manage-flights.component';
 import { AddFlightComponent } from './manage-flights/add-flight/add-flight.component';
 import {MatSelectModule} from '@angular/material/select';
+import { DisplayFlightsComponent } from './manage-flights/display-flights/display-flights.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MatSelectModule} from '@angular/material/select';
     AddAirportComponent,
     DisplayAirportsComponent,
     ManageFlightsComponent,
-    AddFlightComponent
+    AddFlightComponent,
+    DisplayFlightsComponent
   ],
   imports: [
     SharedModule,

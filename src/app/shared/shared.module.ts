@@ -6,11 +6,19 @@ import { MatButtonModule, MatTableModule, MatSortModule, MatIconModule, MatToolb
 import { HttpClientModule } from '@angular/common/http';
 import { FormatUTCDatePipe } from './pipes/format-utc-date.pipe';
 import { DescribeAirportPipe } from './pipes/describe-airport.pipe';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     FormatUTCDatePipe,
     DescribeAirportPipe
+  ],
+  imports:[
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true
+    })
   ],
   exports: [
     CommonModule,
@@ -26,7 +34,8 @@ import { DescribeAirportPipe } from './pipes/describe-airport.pipe';
     MatDatepickerModule,
     MatNativeDateModule,
     FormatUTCDatePipe,
-    DescribeAirportPipe
+    DescribeAirportPipe,
+    ToastrModule
   ]
 })
 export class SharedModule { }

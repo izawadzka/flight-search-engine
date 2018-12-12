@@ -6,6 +6,8 @@ import { AirlineService } from '../../manage-airline/airline.service';
 import { SearchForFlightsService } from 'src/app/shared/search-flights-component/search-flights-fields/search-for-flights.service';
 import { Flight } from 'src/app/shared/models/flight';
 import { AirportService } from '../../manage-airport/airport.service';
+import { ToastrService } from 'ngx-toastr';
+import { ResponseHandler } from 'src/app/shared/response-handler';
 
 @Component({
   selector: 'app-add-flight',
@@ -33,21 +35,24 @@ export class AddFlightComponent implements OnInit {
   ])
   minDate = new Date();
   
-  
+  private responseHandler: ResponseHandler;
 
   constructor(private airlineService: AirlineService, 
     private airportService: AirportService, 
-    private flightService: SearchForFlightsService) { }
+    private flightService: SearchForFlightsService,
+    private toastr: ToastrService) { 
+      this.responseHandler = new ResponseHandler(toastr);
+    }
 
   ngOnInit() {
     this.airlineService.get().subscribe(
       airlines => this.airlines = airlines,
-      err => console.log(err)
+      err => this.responseHandler.showError("load airlines", err)
     );
 
    this.airportService.get().subscribe(
       airports => this.airports = airports,
-      err => console.log(err)
+      err => this.responseHandler.showError("load airports", err)
     )
   }
 
@@ -58,12 +63,12 @@ export class AddFlightComponent implements OnInit {
       airlineName: this.pickedAirlineName,
       departureAirport: this.pickedDepartureAirport,
       destinationAirport: this.pickedDestinationAirport
-    }).subscribe( //todo: display toast with message
+    }).subscribe( 
       res => {
-        if(!res) console.log("Flight already exists")
-        else console.log("Successfully added flight")
+        if(!res) this.responseHandler.showInfo("Flight already exists")
+        else this.responseHandler.showSuccess("added flight")
       },
-      err => console.log(err)
+      err => this.responseHandler.showError("add flight", err)
     )
   }
 

@@ -1,7 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { Flight } from '../models/flight';
 import { ServerResponse } from '../server-response';
 import {MatSort, MatTableDataSource} from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
+import { ResponseHandler } from '../response-handler';
 
 
 @Component({
@@ -15,12 +17,12 @@ export class SearchFlightsComponent{
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   onResponseFromServer(serverResponse: ServerResponse<Flight>){
     if(!serverResponse.hasError()){
       this.dataSource = new MatTableDataSource(serverResponse.getValues());
       this.dataSource.sort = this.sort;
-    }  //todo: else
+    }else new ResponseHandler(this.toastr).showError("load flights", serverResponse.getError())
   }
 }

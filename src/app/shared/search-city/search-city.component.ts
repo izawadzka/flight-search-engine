@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Flight } from '../models/flight';
 import { ServerResponse } from '../server-response';
+import { ResponseHandler } from '../response-handler';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'search-airport-component',
@@ -14,7 +16,7 @@ export class SearchCityComponent{
   
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   ngOnInit() {
   }
@@ -23,6 +25,6 @@ export class SearchCityComponent{
     if(!serverResponse.hasError()){
       this.dataSource = new MatTableDataSource(serverResponse.getValues());
       this.dataSource.sort = this.sort;
-    }  //todo: else
+    }else new ResponseHandler(this.toastr).showError("load flights", serverResponse.getError())
   }
 }

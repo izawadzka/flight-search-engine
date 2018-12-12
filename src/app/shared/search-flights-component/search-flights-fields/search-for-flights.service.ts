@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { SearchFlightsParameters } from './search-flights-parameters';
 import { Flight } from '../../models/flight';
-import { Observable} from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Observable, throwError} from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { CustomError } from '../../custom-error';
 
 
 
@@ -22,11 +23,16 @@ export class SearchForFlightsService {
 
     return this.http.get<Array<Flight>>('/api/database/flights', {
       params: params
-    });
+    }).pipe(
+      catchError((err: HttpErrorResponse) => throwError(new CustomError(err.status)))
+      )
   }
 
   get(): Observable<Array<Flight>>{
-    return this.http.get<Array<Flight>>('/api/database/allflights');
+    return this.http.get<Array<Flight>>('/api/database/allflights')
+    .pipe(
+      catchError((err: HttpErrorResponse) => throwError(new CustomError(err.status)))
+      )
   }
 
   add(flight: Flight): Observable<Flight>{
@@ -43,6 +49,7 @@ export class SearchForFlightsService {
 
     return this.http.post<number>("/api/database/flight", params)
     .pipe(
+      catchError((err: HttpErrorResponse) => throwError(new CustomError(err.status))),
       map(result => result["returnValue"] > -1 ? flight : null)
     )
   }
@@ -52,6 +59,7 @@ export class SearchForFlightsService {
     .set("flightId", flight.flightId.toString())
     return this.http.post<Flight>("/api/database/deleteflight", params)
     .pipe(
+      catchError((err: HttpErrorResponse) => throwError(new CustomError(err.status))),
       map(result => result["returnValue"] > -1 ? flight : null)
     )
   }

@@ -53,7 +53,9 @@ export class AddAirlineComponent{
             if(!res) console.log("Airline already exists");
             else console.log("Successfully added airline")
           },
-          err => console.log(err),
+          err => {
+            console.log(err),
+            document.getElementById("add-airline-button").removeAttribute("disabled")},
           () => document.getElementById("add-airline-button").removeAttribute("disabled")
         )
     }//todo: else

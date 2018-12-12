@@ -1,5 +1,6 @@
 import * as Express from 'express';
 import * as mssql from 'mssql';
+import dateformat = require('dateformat');
 
 const config = {
     user: "sa",
@@ -176,11 +177,15 @@ function makeQuery(query: string): Promise<mssql.IResult<any>>{
 }
 
 function createSearchFlightsQuery(params: any, viewName: string): string{
-    return  `select * from ${viewName} where departureCity = '${params.departureCity}' AND destinationCity = '${params.destinationCity}'`
+    const formattedDate = dateformat(params["departureDate"], 'yyyy-mm-dd')
+
+    return  `select * from ${viewName} where departureCity = '${params.departureCity.toUpperCase()}'` +
+     `AND destinationCity = '${params.destinationCity}'` +
+     `AND CAST(departureDate AS DATE) = '${formattedDate}'`
 }
 
 function createSearchFlightsQueryForSpecificAirport(cityName: string, viewName: string){
-    return `select * from ${viewName} where departureCity LIKE '%${cityName}' OR  destinationCity LIKE '%${cityName}'`
+    return `select * from ${viewName} where departureCity LIKE '%${cityName.toUpperCase()}' OR  destinationCity LIKE '%${cityName.toUpperCase()}'`
 }
 
 function createSimpleSelect(viewNamen: string){

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Airline} from 'src/app/shared/models/airline';
 import { Airport } from 'src/app/shared/models/airport';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { AirlineService } from '../../manage-airline/airline.service';
 import { SearchForFlightsService } from 'src/app/shared/search-flights-component/search-flights-fields/search-for-flights.service';
 import { Flight } from 'src/app/shared/models/flight';
@@ -21,7 +21,16 @@ export class AddFlightComponent implements OnInit {
   pickedDestinationAirport: Airport;
 
   departureDateFormControl = new FormControl(new Date());
+  departureTimeFormControl = new FormControl(new Date().toLocaleTimeString, [
+    Validators.required,
+    Validators.minLength(4)
+  ])
+
   arrivalDateFormControl = new FormControl(new Date());
+  arrivalTimeFormControl = new FormControl(new Date(), [
+    Validators.required,
+    Validators.minLength(4)
+  ])
   minDate = new Date();
   
   
@@ -44,8 +53,8 @@ export class AddFlightComponent implements OnInit {
 
   addFlight(){
     this.flightService.add(<Flight>{
-      departureDate: this.departureDateFormControl.value,
-      arrivalDate: this.arrivalDateFormControl.value,
+      departureDate: this.setTimeOnDate(this.departureTimeFormControl.value, this.departureDateFormControl.value),
+      arrivalDate: this.setTimeOnDate(this.arrivalTimeFormControl.value, this.arrivalDateFormControl.value),
       airlineName: this.pickedAirlineName,
       departureAirport: this.pickedDepartureAirport,
       destinationAirport: this.pickedDestinationAirport
@@ -62,5 +71,10 @@ export class AddFlightComponent implements OnInit {
     return `${airport.name}, ${airport.city}, ${airport.country}`;
   }
 
-  //todo: add time picker
+  setTimeOnDate(time: string, date: string): Date{
+    let depHoursAndMins = time.split(":");
+   
+    return new Date(new Date(date)
+    .setHours(+depHoursAndMins[0], +depHoursAndMins[1]))
+  }
 }

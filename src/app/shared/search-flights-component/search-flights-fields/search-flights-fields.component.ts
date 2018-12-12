@@ -5,6 +5,7 @@ import { SearchForFlightsService } from './search-for-flights.service';
 import { Flight } from '../../models/flight';
 import { ServerResponse } from '../../server-response';
 import { CustomErrorStateMatcher } from '../../custom-error-state-matcher';
+import { CustomError } from '../../custom-error';
 
 
 const REQUIRED_MIN_LENGTH = 2;
@@ -45,8 +46,11 @@ export class SearchFlightsFieldsComponent {
         destinationCity: this.destinationCityFormControl.value,
         departureDate: new Date(this.pickedDateFormControl.value)
       }).subscribe(
-        res => this.responseFromServer.emit(new ServerResponse(res)),
-        err => this.responseFromServer.emit(new ServerResponse(null, err)),
+        (res: Array<Flight>) => this.responseFromServer.emit(new ServerResponse(res)),
+        (err: CustomError) => {
+          document.querySelector(".searchButton").removeAttribute("disabled")
+          this.responseFromServer.emit(new ServerResponse(null, err))
+        },
         () => document.querySelector(".searchButton").removeAttribute("disabled")
     )
   }

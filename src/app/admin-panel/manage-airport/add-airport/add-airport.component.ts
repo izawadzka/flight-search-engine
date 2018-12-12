@@ -3,6 +3,8 @@ import { CustomErrorStateMatcher } from 'src/app/shared/custom-error-state-match
 import { FormControl, Validators } from '@angular/forms';
 import { AirportService } from '../airport.service';
 import { Airport } from 'src/app/shared/models/airport';
+import { ToastrService } from 'ngx-toastr';
+import { ResponseHandler } from 'src/app/shared/response-handler';
 
 const MIN_NAME_OR_COUNTRY_LENGHT = 2;
 const MAX_NAME_OR_COUNTRY_LENGHT = 30;
@@ -58,11 +60,16 @@ export class AddAirportComponent{
     Validators.minLength(MIN_GEO_DATA_LENGHT)
   ]);
 
-  constructor(private airportService: AirportService) { }
+  private responseHandler: ResponseHandler;
+
+  constructor(private airportService: AirportService, private toastr: ToastrService) { 
+    this.responseHandler = new ResponseHandler(toastr);
+  }
 
   addAirport(){
     if(this.areAllInputsValid()){
       document.getElementById("add-airport-button").setAttribute("disabled", "true");
+
       this.airportService.add(
         <Airport>{
           name: this.airportNameFormControl.value,
@@ -75,12 +82,13 @@ export class AddAirportComponent{
         }
       ).subscribe(
         res => {
-          console.log(res);
-          if(res == null){ //todo: display message
-            console.log("Airport already exists");
-          }
+          if(res == null) this.responseHandler.showInfo("Airport already exists")
+          else this.responseHandler.showSuccess("added airport")
         },
-        err => console.log(err),
+        err =>{
+          this.responseHandler.showError("add airport", err);
+          document.getElementById("add-airport-button").removeAttribute("disabled")
+        },
         () => document.getElementById("add-airport-button").removeAttribute("disabled")
       )
     }

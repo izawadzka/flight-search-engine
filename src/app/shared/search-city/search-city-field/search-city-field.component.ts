@@ -33,7 +33,10 @@ export class SearchCityFieldComponent{
 
       this.service.search(this.cityNameFormControl.value).subscribe(
         res => this.responseFromServer.emit(new ServerResponse(res)),
-        err => this.responseFromServer.emit(new ServerResponse(null, err)),
+        err => {
+          document.getElementById("searchForCityButton").removeAttribute("disabled");
+          this.responseFromServer.emit(new ServerResponse(null, err))
+        },
         () => document.getElementById("searchForCityButton").removeAttribute("disabled")
       )
   }

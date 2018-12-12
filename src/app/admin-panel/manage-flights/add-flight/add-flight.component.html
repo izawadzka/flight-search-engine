@@ -1,0 +1,40 @@
+<form class="add-flight-form">
+  <mat-form-field class="wide-form">
+    <mat-select placeholder="Airline name" [(value)]="pickedAirlineName">
+      <mat-option *ngFor="let airline of airlines" [value]="airline.name">
+        {{airline.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="wide-form">
+      <mat-select placeholder="Departure airport" [(value)]="pickedDepartureAirport">
+        <mat-option *ngFor="let airport of airports" [value]="airport">
+          {{generateAirportDescription(airport)}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field class="wide-form">
+      <mat-select placeholder="Destination airport" [(value)]="pickedDestinationAirport">
+        <mat-option *ngFor="let airport of airports" [value]="airport">
+            {{generateAirportDescription(airport)}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field class="narrow-form">
+      <input matInput [matDatepicker]="departureDatePicker" placeholder="Departure date" [formControl]="departureDateFormControl" [min]="minDate">
+      <mat-datepicker-toggle matSuffix [for]="departureDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #departureDatePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="narrow-form">
+      <input matInput  placeholder="Departure time"  type="time" [formControl]="departureTimeFormControl" [errorStateMatcher]="matcher">
+    </mat-form-field>
+    <mat-form-field class="narrow-form">
+        <input matInput [matDatepicker]="arrivalDatePicker" placeholder="Arrival date" [formControl]="arrivalDateFormControl" [min]="minDate">
+        <mat-datepicker-toggle matSuffix [for]="arrivalDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #arrivalDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="narrow-form">
+        <input matInput  placeholder="Arrival time"  type="time" [formControl]="arrivalTimeFormControl" [errorStateMatcher]="matcher">
+      </mat-form-field>
+  <button mat-raised-button color="primary" id="add-flight-button" (click)="addFlight()">Add</button>
+</form>

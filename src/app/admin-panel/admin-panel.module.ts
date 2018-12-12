@@ -10,6 +10,10 @@ import { ManageAirportComponent } from './manage-airport/manage-airport.componen
 import { AddAirportComponent } from './manage-airport/add-airport/add-airport.component';
 import { DisplayAirportsComponent } from './manage-airport/display-airports/display-airports.component';
 import { RouterModule } from '@angular/router';
+import { ManageFlightsComponent } from './manage-flights/manage-flights.component';
+import { AddFlightComponent } from './manage-flights/add-flight/add-flight.component';
+import {MatSelectModule} from '@angular/material/select';
+import { DisplayFlightsComponent } from './manage-flights/display-flights/display-flights.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,24 @@ import { RouterModule } from '@angular/router';
     DisplayAirlinesComponent,
     ManageAirportComponent,
     AddAirportComponent,
-    DisplayAirportsComponent
+    DisplayAirportsComponent,
+    ManageFlightsComponent,
+    AddFlightComponent,
+    DisplayFlightsComponent
   ],
   imports: [
     SharedModule,
     MatListModule,
     MatDividerModule,
+    MatSelectModule,
     RouterModule.forChild([
-      { path: 'admin', component: AdminPanelComponent }
+      { path: 'admin', component: AdminPanelComponent, 
+      children:[
+        {path: '', redirectTo: 'flights', pathMatch: 'full'},
+        {path: 'airlines', component: ManageAirlineComponent},
+        {path: 'airports', component: ManageAirportComponent},
+        {path: 'flights', component: ManageFlightsComponent}
+      ]}
     ])
   ],
   exports: [

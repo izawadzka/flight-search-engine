@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AirportService } from '../airport.service';
 import { Airport } from 'src/app/shared/models/airport';
+import { ToastrService } from 'ngx-toastr';
+import { ResponseHandler } from 'src/app/shared/response-handler';
 
 @Component({
   selector: 'app-display-airports',
@@ -10,12 +12,12 @@ import { Airport } from 'src/app/shared/models/airport';
 export class DisplayAirportsComponent implements OnInit {
   airports: Array<Airport>;
 
-  constructor(private airportService: AirportService) { }
+  constructor(private airportService: AirportService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.airportService.get().subscribe(
       airports => this.airports = airports,
-      err => console.log(err) 
+      err => new ResponseHandler(this.toastr).showError("load airports", err)
     );
   }
 

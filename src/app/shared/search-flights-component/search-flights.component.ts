@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { Flight } from '../models/flight';
 import { ServerResponse } from '../server-response';
 import {MatSort, MatTableDataSource} from '@angular/material';
-import { Airport } from '../models/airport';
+import { ToastrService } from 'ngx-toastr';
+import { ResponseHandler } from '../response-handler';
 
 
 @Component({
@@ -16,25 +17,12 @@ export class SearchFlightsComponent{
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   onResponseFromServer(serverResponse: ServerResponse<Flight>){
     if(!serverResponse.hasError()){
       this.dataSource = new MatTableDataSource(serverResponse.getValues());
       this.dataSource.sort = this.sort;
-    }  //todo: else
-  }
-
-  getAirportDescription(airport: Airport){
-    let description = "";
-    if(airport != null){
-      description += airport.name && airport.name.length > 0 ? `${airport.name} in` : "";
-      description += airport.city && airport.city.length > 0 ? `${airport.city},` : "";
-      description += airport.country && airport.country.length > 0 ? airport.country : ""; 
-    }else{
-      description = "not specified";
-    }
-
-    return description;
+    }else new ResponseHandler(this.toastr).showError("load flights", serverResponse.getError())
   }
 }

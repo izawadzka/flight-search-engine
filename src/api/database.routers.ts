@@ -34,7 +34,9 @@ DatabaseRouter.get('/flights', (req, res)=>{
     const params = req.query;
 
     makeQuery(createSearchFlightsQuery(params, FLIGHTS_VIEW_NAME))
-    .then(result => res.send(result.recordset))
+    .then(result => {
+        console.log(result)
+        res.send(result.recordset)})
     .catch(error => {
         if(error.name == 'RequestError'){
             makeQuery(createSearchFlightsQuery(params, PARTIAL_FLIGHTS_VIEW_NAME))
@@ -105,7 +107,6 @@ DatabaseRouter.get('/flights/:cityName', (req, res)=>{
 });
 
 DatabaseRouter.post('/airline', (req, res)=>{
-    console.log(req.body)
     new mssql.ConnectionPool(config).connect()
     .then(pool => pool.request()
             .input("name", req.body["name"].toUpperCase())
@@ -120,7 +121,6 @@ DatabaseRouter.post('/airline', (req, res)=>{
 })
 
 DatabaseRouter.post('/airport', (req, res)=>{
-   console.log(req.body)
     new mssql.ConnectionPool(config).connect()
     .then(pool => pool.request()
             .input("name", req.body["name"].toUpperCase())
@@ -142,7 +142,7 @@ DatabaseRouter.post('/flight', (req, res)=>{
     new mssql.ConnectionPool(config).connect()
     .then(pool => pool.request()
             .input("airlineName", req.body["airlineName"].toUpperCase())
-            .input("departureAirportName", req.params["departureAirportName"].toUpperCase())
+            .input("departureAirportName", req.body["departureAirportName"].toUpperCase())
             .input("departureAirportCity", req.body["departureAirportCity"].toUpperCase())
             .input("departureAirportCountry", req.body["departureAirportCountry"].toUpperCase())
             .input("destinationAirportName", req.body["destinationAirportName"].toUpperCase())
@@ -188,6 +188,6 @@ function createSearchFlightsQueryForSpecificAirport(cityName: string, viewName: 
     return `select * from ${viewName} where departureCity LIKE '%${cityName.toUpperCase()}' OR  destinationCity LIKE '%${cityName.toUpperCase()}'`
 }
 
-function createSimpleSelect(viewNamen: string){
-    return `select * from ${viewNamen}`;
+function createSimpleSelect(viewName: string){
+    return `select * from ${viewName}`;
 }
